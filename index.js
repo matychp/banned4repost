@@ -54,7 +54,8 @@ bot.command('book', async (ctx) => {
       if (!books) {
         users[bookedUsername] = 1
       } else {
-        users[bookedUsername]++
+        books++
+        users[bookedUsername] = books
       }
 
       bookRef.set({
