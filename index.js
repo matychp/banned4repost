@@ -34,7 +34,7 @@ bot.command('book', async (ctx) => {
     const bookedUsername = text.substr(offset, length)
 
     const bookRef = db.collection('books').doc(`${id}`)
-    const doc = await bookRef.get()
+    const doc = \await bookRef.get()
 
     let books = 0
     if (!doc.exists) {
@@ -67,6 +67,29 @@ bot.command('book', async (ctx) => {
     ctx.reply(`${bookedUsername} has now ${books} books.`)
   } else {
     ctx.reply("You didn't specified a user.")
+  }
+})
+
+book.command('getBooks', async (ctx) => {
+  const {
+    chat: { id = null },
+  } = ctx
+
+  const bookRef = db.collection('books').doc(`${id}`)
+  const doc = await bookRef.get()
+
+  if(!doc.exists) {
+    ctx.reply(`You have to book someone first`)
+  } else {
+    const data = doc.data()
+    const { users } = data
+
+    let message = "Books:\n\n"
+    for(const key in users){
+      message += `${key}: ${users[key]}\n`
+    }
+    
+    ctx.reply(message)
   }
 })
 
