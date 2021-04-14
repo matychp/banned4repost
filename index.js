@@ -36,10 +36,13 @@ bot.command('book', async (ctx) => {
     const bookRef = db.collection('books').doc(`${id}`)
     const doc = await bookRef.get()
 
+    let books = 0
     if (!doc.exists) {
+      books = 1
+
       const data = {
         users: {
-          [bookedUsername]: 1,
+          [bookedUsername]: books,
         },
       }
 
@@ -48,7 +51,7 @@ bot.command('book', async (ctx) => {
       const data = doc.data()
 
       const { users } = data
-      const books = users[bookedUsername]
+      books = users[bookedUsername]
 
       if (!books) {
         users[bookedUsername] = 1
