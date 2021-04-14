@@ -4,15 +4,15 @@ const { db } = require('./lib/firebase')
 
 const { Telegraf } = require('telegraf')
 const PORT = process.env.PORT || 3000
-console.log({ PORT })
 const URL = process.env.URL || ''
 console.log({ URL })
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
-console.log({ TELEGRAM_BOT_TOKEN })
 
 const bot = new Telegraf(TELEGRAM_BOT_TOKEN)
-bot.telegram.setWebhook(`${URL}/bot${TELEGRAM_BOT_TOKEN}`)
+const webhookURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebHook?url=${URL}`
+console.log({ webhookURL })
+bot.telegram.setWebhook(webhookURL)
 bot.startWebhook(`/bot${TELEGRAM_BOT_TOKEN}`, null, PORT)
 
 bot.start((ctx) => {
