@@ -3,8 +3,14 @@ require('dotenv').config()
 const { db } = require('./lib/firebase')
 
 const { Telegraf } = require('telegraf')
+const PORT = process.env.PORT || 3000
+console.log({ PORT })
+const URL = process.env.URL || ''
+console.log({ URL })
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
+bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`)
+bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
 
 bot.start((ctx) => {
   const {
