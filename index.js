@@ -8,9 +8,12 @@ console.log({ PORT })
 const URL = process.env.URL || ''
 console.log({ URL })
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
-bot.telegram.setWebhook(`${URL}/bot${process.env.TELEGRAM_BOT_TOKEN}`)
-bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
+console.log({ TELEGRAM_BOT_TOKEN })
+
+const bot = new Telegraf(TELEGRAM_BOT_TOKEN)
+bot.telegram.setWebhook(`${URL}/bot${TELEGRAM_BOT_TOKEN}`)
+bot.startWebhook(`/bot${TELEGRAM_BOT_TOKEN}`, null, PORT)
 
 bot.start((ctx) => {
   const {
