@@ -9,7 +9,7 @@ const URL = process.env.URL || ''
 console.log({ URL })
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN)
-bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`)
+bot.telegram.setWebhook(`${URL}/bot${process.env.TELEGRAM_BOT_TOKEN}`)
 bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
 
 bot.start((ctx) => {
