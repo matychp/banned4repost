@@ -68,7 +68,7 @@ bot.command('book', async (ctx) => {
   }
 })
 
-book.command('getBooks', async (ctx) => {
+bot.command('getBooks', async (ctx) => {
   const {
     chat: { id = null },
   } = ctx
