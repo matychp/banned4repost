@@ -52,7 +52,8 @@ bot.command('book', async (ctx) => {
       books = users[bookedUsername]
 
       if (!books) {
-        users[bookedUsername] = 1
+        books = 1
+        users[bookedUsername] = books
       } else {
         books++
         users[bookedUsername] = books
