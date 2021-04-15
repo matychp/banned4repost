@@ -13,14 +13,6 @@ const webhookURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebHook
 bot.telegram.setWebhook(webhookURL)
 bot.startWebhook(`/bot${TELEGRAM_BOT_TOKEN}`, null, PORT)
 
-bot.start((ctx) => {
-  const {
-    from: { first_name = '' },
-  } = ctx
-
-  ctx.reply(`Hello ${first_name}`)
-})
-
 bot.command('book', async (ctx) => {
   const {
     chat: { id = null },
