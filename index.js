@@ -1,17 +1,9 @@
 require('dotenv').config()
-
 const { db } = require('./lib/firebase')
-
 const { Telegraf } = require('telegraf')
-const PORT = process.env.PORT || 3000
-const URL = process.env.URL || ''
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || ''
-
 const bot = new Telegraf(TELEGRAM_BOT_TOKEN)
-const webhookURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebHook?url=${URL}`
-bot.telegram.setWebhook(webhookURL)
-bot.startWebhook(`/bot${TELEGRAM_BOT_TOKEN}`, null, PORT)
 
 bot.command('book', async (ctx) => {
   const {
@@ -85,4 +77,18 @@ bot.command('getBooks', async (ctx) => {
   }
 })
 
-bot.launch()
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'))
+process.once('SIGTERM', () => bot.stop('SIGTERM'))
+
+// Start WebHook
+const PORT = process.env.PORT || 3000
+const URL = process.env.URL || ''
+const WebhookURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebHook?url=${URL}`
+
+bot.launch({
+  webhook: {
+    domain: WebhookURL,
+    port: PORT,
+  },
+})
